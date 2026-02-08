@@ -1,2 +1,3 @@
-# create-mvp-ai-app-as-a-rule-based-knowledge-assistant-no-external-llm
-Exported from Caffeine project: Create MVP “AI” app as a rule-based knowledge assistant (no external LLM)
+## Create MVP “AI” app as a rule-based knowledge assistant (no external LLM)
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

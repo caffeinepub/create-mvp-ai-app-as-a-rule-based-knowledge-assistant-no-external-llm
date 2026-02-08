@@ -1,0 +1,20 @@
+{
+  "frontend/src/App.tsx": "Main application component that handles authentication state, profile setup, and view routing between Chat and Knowledge Base pages with ThemeProvider and Toaster integration.",
+  "frontend/src/pages/ChatPage.tsx": "Chat interface page with message history display, input composer, and send functionality that triggers deterministic knowledge base search and displays assistant responses.",
+  "frontend/src/pages/KnowledgeBasePage.tsx": "Knowledge base management page displaying all entries in cards with add/edit/delete functionality and empty state guidance.",
+  "frontend/src/components/chat/ChatMessageBubble.tsx": "Presentational component for rendering individual chat messages with user/assistant styling, timestamps, and appropriate alignment.",
+  "frontend/src/components/knowledge/KnowledgeEntryCard.tsx": "Card component displaying a single knowledge entry with question/answer and edit/delete action buttons with confirmation dialog.",
+  "frontend/src/components/knowledge/KnowledgeEntryFormDialog.tsx": "Modal dialog form for adding or editing knowledge entries with validation, loading states, and toast notifications.",
+  "frontend/src/components/layout/AppShell.tsx": "Main layout wrapper providing header, content area, and footer with navigation state management and consistent structure.",
+  "frontend/src/components/layout/AppHeader.tsx": "Application header with logo, app title, navigation buttons for Chat/Knowledge Base views, user profile display, and login/logout button.",
+  "frontend/src/components/auth/AuthGate.tsx": "Unauthenticated landing page with branding, feature highlights, and Internet Identity sign-in call-to-action.",
+  "frontend/src/components/auth/LoginButton.tsx": "Logout button component that clears authentication and React Query cache on sign out.",
+  "frontend/src/components/auth/ProfileSetupDialog.tsx": "First-login modal dialog that prompts authenticated users to enter their name for profile creation.",
+  "frontend/src/hooks/useCurrentUserProfile.ts": "React Query hooks for fetching and saving user profile with proper actor dependency handling to prevent modal flash.",
+  "frontend/src/hooks/useKnowledgeEntries.ts": "React Query hooks for CRUD operations on knowledge entries with automatic cache invalidation.",
+  "frontend/src/hooks/useChat.ts": "React Query hooks for chat history and sending messages with deterministic knowledge base search and fallback responses.",
+  "frontend/index.css": "Global styles with warm sand/stone OKLCH color palette featuring olive/sage primary and amber accents for both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration with custom font families, extended color tokens, varied border radii, and custom shadows for the warm neutral theme.",
+  "frontend/src/main.tsx": "Application entry point that sets up React Query, Internet Identity provider, and renders the App component with correct CSS import path from src directory.",
+  "frontend/src/index.css": "Global styles with warm sand/stone OKLCH color palette featuring olive/sage primary and amber accents for both light and dark modes."
+}

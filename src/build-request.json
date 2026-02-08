@@ -1,0 +1,132 @@
+{
+  "kind": "build_request",
+  "title": "Create MVP “AI” app as a rule-based knowledge assistant (no external LLM)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Build an MVP “AI assistant” experience as a chat-style UI that answers users using a user-managed knowledge base (FAQ-style entries) and simple keyword matching (no external AI/LLM APIs).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ok caffine lets create an AI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App provides a chat interface where a user can type a question and receive an answer.",
+        "Answers are generated deterministically from stored knowledge entries using a simple keyword/term matching approach (no calls to OpenAI/Anthropic/other LLM services).",
+        "If no knowledge entry matches, the assistant responds with a clear fallback message asking the user to add knowledge entries."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement backend persistence in Motoko for knowledge entries and chat history per authenticated user (Internet Identity), including CRUD operations for knowledge entries.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ok caffine lets create an AI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Authenticated users can create, list, update, and delete their own knowledge entries (title + body text).",
+        "Chat history is saved per user and can be retrieved after refresh.",
+        "Data persists across canister upgrades using stable storage (add migration logic only if required by template state)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create a Knowledge Base management screen in the React frontend to add/edit/delete knowledge entries and view all existing entries.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ok caffine lets create an AI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can add a new knowledge entry with required fields validated.",
+        "User can edit and delete an existing entry.",
+        "UI uses React Query for loading/mutations and shows loading + error states."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add an authenticated app shell with navigation between Chat and Knowledge Base, and ensure unauthenticated users are prompted to sign in with Internet Identity.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ok caffine lets create an AI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When not signed in, the UI shows a sign-in call-to-action and prevents access to user data.",
+        "After sign-in, the user can navigate between Chat and Knowledge Base pages without losing session state.",
+        "Navigation state is clear and consistent across pages."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Apply a coherent visual theme across the app (color palette, typography, spacing, component styling) suitable for a productivity “assistant” tool; avoid default-looking styling and avoid blue/purple as primary brand colors.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ok caffine lets create an AI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All primary screens (Chat, Knowledge Base, auth prompt) share a consistent theme.",
+        "Theme uses Tailwind and shadcn/ui composition (do not edit immutable UI component sources).",
+        "Primary brand colors are not blue/purple."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Generate and include a simple app logo/mark as a static asset and display it in the app header/login view.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "ok caffine lets create an AI"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A generated image exists in frontend/public/assets/generated and is referenced directly by the frontend (not served via backend).",
+        "Logo appears in the app header (and/or sign-in view) with appropriate sizing and contrast.",
+        "Build has no missing-asset errors."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not use external AI/LLM APIs or integrations (no OpenAI/Anthropic/etc.).",
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo).",
+    "Do not modify frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Implementing a true generative AI model or LLM-based chatbot.",
+    "Real-time features (WebSockets), push notifications, or email/SMS integrations.",
+    "Third-party authentication providers other than Internet Identity."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal geometric “assistant” logo mark with subtle circuit/brain motif, warm neutral palette (ai-mark.dim_512x512.png)"
+    ],
+    "edits": []
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Rule-based Knowledge Assistant MVP (React frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Chat-style UI that answers deterministically from the user’s stored knowledge entries via simple keyword matching and shows a fallback when no match exists.",
+      "acceptanceCriteria": [
+        "App provides a chat interface where a user can type a question and receive an answer.",
+        "Answers are generated deterministically from stored knowledge entries using a simple keyword/term matching approach (no calls to OpenAI/Anthropic/other LLM services).",
+        "If no knowledge entry matches, the assistant responds with a clear fallback message asking the user to add knowledge entries."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ChatPage.tsx",
+          "operation": "create",
+          "description": "Create the Chat page UI: message list, input composer, send action, and deterministic answer behavior by calling backend searchKnowledge for keyword/term matching, appending a fallback assistant message when no results, and persisting/reloading chat via getChatHistory/addChatMessage. Use shadcn/ui building blocks (e.g., Card, Button, Input/textarea, ScrollArea) for layout and states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useChat.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for chat history (getChatHistory) and send message mutation (addChatMessage), plus a helper to run deterministic searchKnowledge and map results into an assistant reply; include loading/error handling suitable for the Chat UI."
+        },
+        {
+          "path": "frontend/src/components/chat/ChatMessageBubble.tsx",
+          "operation": "create",
+          "description": "Create a presentational bubble component for user vs assistant messages (timestamp, alignment, readable typography) used by ChatPage. Use shadcn/ui primitives where appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Wire the Chat page into the top-level app view, ensuring it is reachable after authentication and is part of the app navigation structure (alongside Knowledge Base)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Knowledge Base management screen to add/edit/delete FAQ-style knowledge entries with validation and React Query loading/mutation states.",
+      "acceptanceCriteria": [
+        "User can add a new knowledge entry with required fields validated.",
+        "User can edit and delete an existing entry.",
+        "UI uses React Query for loading/mutations and shows loading + error states."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/KnowledgeBasePage.tsx",
+          "operation": "create",
+          "description": "Create Knowledge Base management UI to list all entries and support add/edit/delete flows with field validation (required question + answer) and clear loading/error/empty states. Use shadcn/ui components (Table/Card/Dialog/Drawer, Button, Input/Textarea, Alert) for consistent UX. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useKnowledgeEntries.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for knowledge entries: list (getKnowledgeEntries) and mutations (addKnowledgeEntry/updateKnowledgeEntry/deleteKnowledgeEntry), including cache invalidation and error propagation for UI to display."
+        },
+        {
+          "path": "frontend/src/components/knowledge/KnowledgeEntryFormDialog.tsx",
+          "operation": "create",
+          "description": "Create an add/edit dialog component used by KnowledgeBasePage, with client-side validation and mutation submission states. Use shadcn/ui Dialog, Form-like composition, Button, Input/Textarea. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add navigation wiring so the Knowledge Base screen is reachable from the authenticated app shell and the currently active section is clearly indicated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Authenticated app shell with navigation between Chat and Knowledge Base; unauthenticated users are prompted to sign in with Internet Identity and cannot access user data.",
+      "acceptanceCriteria": [
+        "When not signed in, the UI shows a sign-in call-to-action and prevents access to user data.",
+        "After sign-in, the user can navigate between Chat and Knowledge Base pages without losing session state.",
+        "Navigation state is clear and consistent across pages."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Implement the authenticated/unauthenticated split using the existing useInternetIdentity hook: show a sign-in view when identity is absent; show the app shell when present. Provide clear navigation between Chat and Knowledge Base without full reload (e.g., internal route/state). Ensure no actor-backed queries run when unauthenticated."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "create",
+          "description": "Create an app shell layout with header + nav and a main content area used for Chat and Knowledge Base. Use shadcn/ui composition (e.g., NavigationMenu/Tabs/Button) to keep navigation state clear and consistent. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
+          "operation": "create",
+          "description": "Create an AuthGate wrapper that blocks rendering of data pages when unauthenticated, shows the sign-in call-to-action, and (on logout) triggers React Query cache clearing consistent with the authorization component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Add a Login/Logout button using useInternetIdentity and React Query’s queryClient.clear() on logout, following the selected authorization component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUserProfile.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for getCallerUserProfile/saveCallerUserProfile to avoid profile-setup modal flash (enabled only when actor is ready), per the selected authorization component guidance."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Add a first-login profile setup dialog that asks for the user’s name (English text), shown only when authenticated and getCallerUserProfile returns null; submits via saveCallerUserProfile. Use shadcn/ui Dialog, Input, Button. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "create",
+          "description": "Create a header that includes the app logo, app name, current user display (prefer profile name, avoid showing principal id), and the LoginButton. Use shadcn/ui primitives for consistent styling. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Apply a coherent, non-default productivity assistant theme using Tailwind + shadcn/ui composition, avoiding blue/purple as primary brand colors.",
+      "acceptanceCriteria": [
+        "All primary screens (Chat, Knowledge Base, auth prompt) share a consistent theme.",
+        "Theme uses Tailwind and shadcn/ui composition (do not edit immutable UI component sources).",
+        "Primary brand colors are not blue/purple."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.css",
+          "operation": "modify",
+          "description": "Adjust the global CSS variables (shadcn/ui theme tokens) to a warm neutral productivity palette (e.g., sand/stone background with olive/amber accent) ensuring primary is not blue/purple; tune typography and spacing defaults for a polished assistant tool feel."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Refine Tailwind theme extensions as needed to support the chosen warm-neutral brand (e.g., add semantic color aliases or refine radius/shadows) without changing immutable shadcn/ui component sources."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "modify",
+          "description": "Apply consistent layout spacing, surface styling, and responsive behavior in the app shell using Tailwind utility classes and shadcn/ui composition (no direct edits to immutable ui components). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ChatPage.tsx",
+          "operation": "modify",
+          "description": "Ensure Chat page adheres to the theme (typography, spacing, surfaces, focus states) and does not look default; keep all user-facing text in English. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/KnowledgeBasePage.tsx",
+          "operation": "modify",
+          "description": "Ensure Knowledge Base page adheres to the same theme with cohesive component styling, loading/error/empty states, and English text. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
+          "operation": "modify",
+          "description": "Style the unauthenticated prompt view to match the app theme (surfaces, typography, call-to-action styling) using Tailwind + shadcn/ui composition. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add a generated static logo asset and display it in the header and sign-in view with appropriate sizing and contrast.",
+      "acceptanceCriteria": [
+        "A generated image exists in frontend/public/assets/generated and is referenced directly by the frontend (not served via backend).",
+        "Logo appears in the app header (and/or sign-in view) with appropriate sizing and contrast.",
+        "Build has no missing-asset errors."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/ai-mark.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo asset file to be served statically by the frontend build."
+        },
+        {
+          "path": "frontend/src/components/layout/AppHeader.tsx",
+          "operation": "modify",
+          "description": "Render the logo image from frontend/public/assets/generated/ai-mark.dim_512x512.png in the app header with appropriate size, spacing, and contrast alongside the app title. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
+          "operation": "modify",
+          "description": "Display the same logo from frontend/public/assets/generated/ai-mark.dim_512x512.png on the sign-in prompt view to reinforce branding, ensuring it reads well on the chosen warm-neutral theme. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}
