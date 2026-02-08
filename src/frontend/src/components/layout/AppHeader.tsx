@@ -12,19 +12,24 @@ export default function AppHeader({ currentView, onViewChange }: AppHeaderProps)
   const { data: userProfile } = useGetCallerUserProfile();
 
   return (
-    <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b-2 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
-              <img
-                src="/assets/generated/ai-mark.dim_512x512.png"
-                alt="AI Assistant"
-                className="h-10 w-10 rounded-lg"
-              />
+              <div className="relative">
+                <img
+                  src="/assets/generated/ai-mark.dim_512x512.png"
+                  alt="UNKNOWN CRIC"
+                  className="h-12 w-12 rounded-xl shadow-glow"
+                />
+                <div className="absolute -top-1 -right-1 h-4 w-4 bg-gradient-to-br from-accent to-secondary rounded-full animate-pulse-glow" />
+              </div>
               <div>
-                <h1 className="text-xl font-bold tracking-tight">AI Assistant</h1>
-                <p className="text-xs text-muted-foreground">Knowledge-powered chat</p>
+                <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                  UNKNOWN CRIC
+                </h1>
+                <p className="text-xs font-medium text-muted-foreground">Knowledge-powered assistant</p>
               </div>
             </div>
 
@@ -32,7 +37,7 @@ export default function AppHeader({ currentView, onViewChange }: AppHeaderProps)
               <Button
                 variant={currentView === 'chat' ? 'default' : 'ghost'}
                 onClick={() => onViewChange('chat')}
-                className="gap-2"
+                className="gap-2 transition-all hover:shadow-glow"
               >
                 <MessageSquare className="h-4 w-4" />
                 Chat
@@ -40,7 +45,7 @@ export default function AppHeader({ currentView, onViewChange }: AppHeaderProps)
               <Button
                 variant={currentView === 'knowledge' ? 'default' : 'ghost'}
                 onClick={() => onViewChange('knowledge')}
-                className="gap-2"
+                className="gap-2 transition-all hover:shadow-glow"
               >
                 <BookOpen className="h-4 w-4" />
                 Knowledge Base
@@ -50,8 +55,11 @@ export default function AppHeader({ currentView, onViewChange }: AppHeaderProps)
 
           <div className="flex items-center gap-4">
             {userProfile && (
-              <div className="hidden sm:block text-sm text-muted-foreground">
-                Welcome, <span className="font-medium text-foreground">{userProfile.name}</span>
+              <div className="hidden sm:block text-sm">
+                <span className="text-muted-foreground">Welcome, </span>
+                <span className="font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  {userProfile.name}
+                </span>
               </div>
             )}
             <LoginButton />
@@ -62,7 +70,7 @@ export default function AppHeader({ currentView, onViewChange }: AppHeaderProps)
           <Button
             variant={currentView === 'chat' ? 'default' : 'ghost'}
             onClick={() => onViewChange('chat')}
-            className="flex-1 gap-2"
+            className="flex-1 gap-2 transition-all"
           >
             <MessageSquare className="h-4 w-4" />
             Chat
@@ -70,7 +78,7 @@ export default function AppHeader({ currentView, onViewChange }: AppHeaderProps)
           <Button
             variant={currentView === 'knowledge' ? 'default' : 'ghost'}
             onClick={() => onViewChange('knowledge')}
-            className="flex-1 gap-2"
+            className="flex-1 gap-2 transition-all"
           >
             <BookOpen className="h-4 w-4" />
             Knowledge Base

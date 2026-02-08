@@ -1,117 +1,34 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-08T03:05:32.390Z",
-  "summary": "Diff adds a chat + knowledge base React UI and a Motoko backend with per-caller maps and CRUD-style methods, plus theming and logo references. However, several BuildRequest requirements are either not evidenced in the diff (notably stable persistence across upgrades, chat/search backend implementation details, and title/body schema) or partially implemented (frontend error states). The diff also introduces unrequested features such as user profiles, admin/access-control initialization, and a profile setup dialog.",
+  "generatedAt": "2026-02-08T03:16:18.323Z",
+  "summary": "A new PreChatQuickOptions component was added and ChatPage was updated to show quick option buttons when there are no messages and not loading, with selection intended to prefill the input and focus the textarea. However, the ChatPage diff is truncated and shows an incomplete/possibly incorrect prop (`onSelec...`), so it’s not fully verifiable that the options are correctly wired and that the textarea ref is attached for focusing.",
   "missing_requirements": [
     {
-      "id": "REQ-1",
-      "requirement": "Answers are generated deterministically from stored knowledge entries using a simple keyword/term matching approach, and if no match, respond with a fallback asking the user to add knowledge entries.",
-      "reason": "Frontend calls backend methods `searchKnowledge` and chat methods (`addChatMessage`, `getChatHistory`), but the backend implementation for chat management and keyword matching is not shown (backend file is truncated right before chat/search logic). Cannot verify deterministic keyword matching or fallback behavior is implemented in backend (source of truth for logic).",
+      "id": "REQ-9",
+      "requirement": "Show four visible quick option buttons (Study, Knowledge, Research, Other) in the empty-state UI above the message input when there are zero messages and not loading, and hide them once there is at least one message.",
+      "reason": "While the intent is present, the ChatPage change is truncated right where PreChatQuickOptions is rendered and shows `onSelec...`, so it cannot be confirmed that the component is actually rendered correctly in the empty state without a wiring/compile error.",
       "evidence": [
-        "backend/main.mo (truncated)",
-        "frontend/src/hooks/useChat.ts"
+        "frontend/src/pages/ChatPage.tsx (truncated: `!isLoading && messages.length === 0 && ( <PreChatQuickOptions onSelec...`)",
+        "frontend/src/components/chat/PreChatQuickOptions.tsx"
       ]
     },
     {
-      "id": "REQ-2",
-      "requirement": "Persist knowledge entries and chat history per authenticated user across canister upgrades using stable storage (with migration only if needed).",
-      "reason": "Backend state is shown as in-memory `var` counters and `Map.empty` values with a comment 'Persistent storage', but no `stable var` usage or `system preupgrade/postupgrade` hooks are evidenced in the visible diff. Truncated section also prevents confirming upgrade persistence exists.",
+      "id": "REQ-10",
+      "requirement": "Clicking each option should prefill the chat Textarea with an appropriate English prompt (without sending) and focus the Textarea; send behavior should remain only on Enter (no Shift) or Send button, and send enable/disable logic should continue to work.",
+      "reason": "ChatPage includes a handler that sets input and attempts to focus `textareaRef`, but the diff is truncated before showing the Textarea ref attachment and the actual PreChatQuickOptions prop wiring (appears as `onSelec...`), so focus/prefill actionability cannot be fully verified from the provided diff.",
       "evidence": [
-        "backend/main.mo (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "requirement": "Knowledge entry schema: title + body text; CRUD for authenticated users on their own entries.",
-      "reason": "Backend types and CRUD use `question` and `answer` fields, not `title` + `body` as specified. This is a schema mismatch against the requirement.",
-      "evidence": [
-        "backend/main.mo (KnowledgeEntry type and CRUD: addKnowledgeEntry/updateKnowledgeEntry)",
-        "frontend/src/hooks/useKnowledgeEntries.ts (question/answer)",
-        "frontend/src/components/knowledge/KnowledgeEntryFormDialog.tsx (Question/Answer fields)"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "requirement": "Knowledge Base screen uses React Query and shows loading + error states for loading/mutations.",
-      "reason": "Loading state is shown, and mutations toast on failure, but there is no explicit UI for query error states (e.g., `isError` rendering) in the Knowledge Base page. The hook/page shown do not display errors when `getKnowledgeEntries` fails.",
-      "evidence": [
-        "frontend/src/pages/KnowledgeBasePage.tsx",
-        "frontend/src/hooks/useKnowledgeEntries.ts"
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "requirement": "Generated logo image exists at `frontend/public/assets/generated` and build has no missing-asset errors.",
-      "reason": "Frontend references `/assets/generated/ai-mark.dim_512x512.png`, but the diff summary omits several added files and does not show the actual image asset being added. Cannot verify the asset exists from provided diff evidence.",
-      "evidence": [
-        "frontend/src/components/auth/AuthGate.tsx",
-        "frontend/src/components/layout/AppHeader.tsx"
+        "frontend/src/pages/ChatPage.tsx (truncated: handleOptionSelect uses `textareaRef.current?.focus()` and PreChatQuickOptions render begins with `onSelec...`)",
+        "frontend/src/components/chat/PreChatQuickOptions.tsx"
       ]
     }
   ],
-  "hallucinated_features": [
-    {
-      "description": "User profile feature (save/get profile) and a mandatory profile setup dialog after sign-in.",
-      "reason": "BuildRequest does not request user profiles or a profile setup flow; it only requires authenticated chat + per-user knowledge base/history.",
-      "evidence": [
-        "backend/main.mo (UserProfile, getCallerUserProfile, saveCallerUserProfile, getUserProfile)",
-        "frontend/src/hooks/useCurrentUserProfile.ts",
-        "frontend/src/components/auth/ProfileSetupDialog.tsx",
-        "frontend/src/App.tsx"
-      ]
-    },
-    {
-      "description": "Custom access-control/admin initialization via secret URL parameter (`caffeineAdminToken`) and authorization mixins.",
-      "reason": "BuildRequest does not request admin token bootstrap or custom access control framework; only Internet Identity authentication and per-user data separation are required.",
-      "evidence": [
-        "backend/main.mo (MixinAuthorization, AccessControl, permission checks)",
-        "frontend/src/hooks/useActor.ts",
-        "frontend/src/utils/urlParams.ts"
-      ]
-    },
-    {
-      "description": "Footer attribution link to caffeine.ai.",
-      "reason": "Not requested as part of MVP requirements; adds unrelated branding/content.",
-      "evidence": [
-        "frontend/src/components/layout/AppShell.tsx"
-      ]
-    },
-    {
-      "description": "Dark-mode/theming infrastructure using `next-themes` ThemeProvider.",
-      "reason": "REQ-5 asks for coherent theme styling, but does not request system theme switching or use of next-themes specifically; this is extra beyond stated requirements.",
-      "evidence": [
-        "frontend/src/App.tsx"
-      ]
-    }
-  ],
+  "hallucinated_features": [],
   "confidence": 0.62,
   "changed_files": [
-    "all_files_summary.json",
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.css",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/auth/AuthGate.tsx",
-    "frontend/src/components/auth/LoginButton.tsx",
-    "frontend/src/components/auth/ProfileSetupDialog.tsx",
-    "frontend/src/components/chat/ChatMessageBubble.tsx",
-    "frontend/src/components/knowledge/KnowledgeEntryCard.tsx",
-    "frontend/src/components/knowledge/KnowledgeEntryFormDialog.tsx",
-    "frontend/src/components/layout/AppHeader.tsx",
-    "frontend/src/components/layout/AppShell.tsx",
-    "frontend/src/hooks/useActor.ts",
-    "frontend/src/hooks/useChat.ts",
-    "frontend/src/hooks/useCurrentUserProfile.ts",
-    "frontend/src/hooks/useInternetIdentity.ts",
-    "frontend/src/hooks/useKnowledgeEntries.ts",
-    "frontend/src/index.css",
-    "frontend/src/main.tsx",
+    "frontend/src/components/chat/PreChatQuickOptions.tsx",
     "frontend/src/pages/ChatPage.tsx",
-    "frontend/src/pages/KnowledgeBasePage.tsx",
-    "frontend/src/utils/urlParams.ts",
-    "frontend/tailwind.config.js",
     "project_state.json"
   ]
 }

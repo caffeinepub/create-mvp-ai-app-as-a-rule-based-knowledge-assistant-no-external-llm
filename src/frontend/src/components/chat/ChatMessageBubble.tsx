@@ -16,15 +16,15 @@ export default function ChatMessageBubble({ message, isUser, timestamp }: ChatMe
       <div className={cn('max-w-[80%] space-y-1', isUser ? 'items-end' : 'items-start')}>
         <div
           className={cn(
-            'rounded-2xl px-4 py-3 shadow-sm',
+            'rounded-2xl px-4 py-3 shadow-md transition-all hover:shadow-lg',
             isUser
-              ? 'bg-primary text-primary-foreground rounded-br-sm'
-              : 'bg-card border-2 rounded-bl-sm'
+              ? 'bg-gradient-to-br from-primary via-primary to-accent text-primary-foreground rounded-br-sm border-2 border-primary/20 shadow-glow'
+              : 'bg-gradient-to-br from-card via-card to-secondary/10 border-2 border-border rounded-bl-sm hover:border-accent/50'
           )}
         >
           <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{message}</p>
         </div>
-        <p className={cn('text-xs text-muted-foreground px-2', isUser ? 'text-right' : 'text-left')}>
+        <p className={cn('text-xs text-muted-foreground px-2 font-medium', isUser ? 'text-right' : 'text-left')}>
           {timeString}
         </p>
       </div>

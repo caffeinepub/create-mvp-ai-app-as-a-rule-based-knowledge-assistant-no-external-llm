@@ -2,12 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-build-an-mvp-ai-assistant-experience-as-a-chat-style-ui-that-answers-users-using-a-user-managed-knowledge-base-faq-style-entries-and-simple-keyword-matching-no-external-ai-llm-apis",
-      "featureTitle": "Build an MVP “AI assistant” experience as a chat-style UI that answers users using a user-managed knowledge base (FAQ-style entries) and simple keyword matching (no external AI/LLM APIs).",
+      "featureId": "feature-on-the-chat-page-when-the-chat-history-is-empty-before-the-user-starts-chatting-display-a-set-of-selectable-quick-options-buttons-labeled-study-knowledge-research-and-other-above-the-message-input-area-in-the-existing-empty-state-ui",
+      "featureTitle": "On the Chat page, when the chat history is empty (before the user starts chatting), display a set of selectable quick options/buttons labeled \"Study\", \"Knowledge\", \"Research\", and \"Other\" above the message input area (in the existing empty-state UI).",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/chat/ChatMessageBubble.tsx",
-        "frontend/src/hooks/useChat.ts",
+        "frontend/src/components/chat/PreChatQuickOptions.tsx",
         "frontend/src/pages/ChatPage.tsx"
       ],
       "components": [
@@ -19,18 +17,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-9"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-a-knowledge-base-management-screen-in-the-react-frontend-to-add-edit-delete-knowledge-entries-and-view-all-existing-entries",
-      "featureTitle": "Create a Knowledge Base management screen in the React frontend to add/edit/delete knowledge entries and view all existing entries.",
+      "featureId": "feature-make-each-pre-chat-option-actionable-clicking-an-option-should-prefill-the-chat-textarea-with-a-short-english-prompt-appropriate-to-the-selected-option-without-sending-automatically-and-place-focus-in-the-textarea-so-the-user-can-edit-and-send",
+      "featureTitle": "Make each pre-chat option actionable: clicking an option should prefill the chat Textarea with a short English prompt appropriate to the selected option (without sending automatically), and place focus in the Textarea so the user can edit and send.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/knowledge/KnowledgeEntryFormDialog.tsx",
-        "frontend/src/hooks/useKnowledgeEntries.ts",
-        "frontend/src/pages/KnowledgeBasePage.tsx"
+        "frontend/src/components/chat/PreChatQuickOptions.tsx",
+        "frontend/src/pages/ChatPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -41,21 +37,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-10"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-an-authenticated-app-shell-with-navigation-between-chat-and-knowledge-base-and-ensure-unauthenticated-users-are-prompted-to-sign-in-with-internet-identity",
-      "featureTitle": "Add an authenticated app shell with navigation between Chat and Knowledge Base, and ensure unauthenticated users are prompted to sign in with Internet Identity.",
+      "featureId": "feature-style-the-pre-chat-options-to-match-the-existing-app-theme-use-existing-ui-components-e-g-shadcn-button-card-and-ensure-the-options-look-good-in-both-light-and-dark-mode-preserving-the-current-empty-state-layout-and-spacing",
+      "featureTitle": "Style the pre-chat options to match the existing app theme: use existing UI components (e.g., shadcn Button/Card) and ensure the options look good in both light and dark mode, preserving the current empty-state layout and spacing.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/auth/AuthGate.tsx",
-        "frontend/src/components/auth/LoginButton.tsx",
-        "frontend/src/components/auth/ProfileSetupDialog.tsx",
-        "frontend/src/components/layout/AppHeader.tsx",
-        "frontend/src/components/layout/AppShell.tsx",
-        "frontend/src/hooks/useCurrentUserProfile.ts"
+        "frontend/src/components/chat/PreChatQuickOptions.tsx",
+        "frontend/src/pages/ChatPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -66,51 +57,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-a-coherent-visual-theme-across-the-app-color-palette-typography-spacing-component-styling-suitable-for-a-productivity-assistant-tool-avoid-default-looking-styling-and-avoid-blue-purple-as-primary-brand-colors",
-      "featureTitle": "Apply a coherent visual theme across the app (color palette, typography, spacing, component styling) suitable for a productivity “assistant” tool; avoid default-looking styling and avoid blue/purple as primary brand colors.",
-      "files": [
-        "frontend/index.css",
-        "frontend/src/components/auth/AuthGate.tsx",
-        "frontend/src/components/layout/AppShell.tsx",
-        "frontend/src/pages/ChatPage.tsx",
-        "frontend/src/pages/KnowledgeBasePage.tsx",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-generate-and-include-a-simple-app-logo-mark-as-a-static-asset-and-display-it-in-the-app-header-login-view",
-      "featureTitle": "Generate and include a simple app logo/mark as a static asset and display it in the app header/login view.",
-      "files": [
-        "frontend/src/components/auth/AuthGate.tsx",
-        "frontend/src/components/layout/AppHeader.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
+        "REQ-11"
       ],
       "confidence": "high"
     }

@@ -17,6 +17,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: [
+                    'Space Grotesk',
                     'Inter var',
                     'Inter',
                     'system-ui',
@@ -68,6 +69,10 @@ export default {
                     DEFAULT: 'oklch(var(--card))',
                     foreground: 'oklch(var(--card-foreground))'
                 },
+                success: {
+                    DEFAULT: 'oklch(var(--success) / <alpha-value>)',
+                    foreground: 'oklch(var(--success-foreground))'
+                },
                 chart: {
                     1: 'oklch(var(--chart-1))',
                     2: 'oklch(var(--chart-2))',
@@ -81,11 +86,15 @@ export default {
                 md: 'calc(var(--radius) - 2px)',
                 sm: 'calc(var(--radius) - 4px)',
                 xl: 'calc(var(--radius) + 4px)',
-                '2xl': 'calc(var(--radius) + 8px)'
+                '2xl': 'calc(var(--radius) + 8px)',
+                '3xl': 'calc(var(--radius) + 12px)'
             },
             boxShadow: {
                 xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
-                soft: '0 2px 8px -2px rgba(0,0,0,0.1), 0 4px 12px -4px rgba(0,0,0,0.08)'
+                soft: '0 2px 8px -2px rgba(0,0,0,0.1), 0 4px 12px -4px rgba(0,0,0,0.08)',
+                glow: '0 0 20px -5px oklch(var(--primary) / 0.3)',
+                'glow-lg': '0 0 30px -5px oklch(var(--primary) / 0.4)',
+                'accent-glow': '0 0 20px -5px oklch(var(--accent) / 0.3)'
             },
             keyframes: {
                 'accordion-down': {
@@ -95,14 +104,18 @@ export default {
                 'accordion-up': {
                     from: { height: 'var(--radix-accordion-content-height)' },
                     to: { height: '0' }
+                },
+                'pulse-glow': {
+                    '0%, 100%': { boxShadow: '0 0 20px -5px oklch(var(--primary) / 0.3)' },
+                    '50%': { boxShadow: '0 0 30px -5px oklch(var(--primary) / 0.5)' }
                 }
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
-                'accordion-up': 'accordion-up 0.2s ease-out'
+                'accordion-up': 'accordion-up 0.2s ease-out',
+                'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
             }
         }
     },
     plugins: [typography, containerQueries, animate]
 };
-

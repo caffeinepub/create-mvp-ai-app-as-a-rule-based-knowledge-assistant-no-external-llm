@@ -89,10 +89,10 @@ export default function KnowledgeEntryFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] border-2 shadow-glow">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{editingEntry ? 'Edit' : 'Add'} Knowledge Entry</DialogTitle>
+            <DialogTitle className="text-xl">{editingEntry ? 'Edit' : 'Add'} Knowledge Entry</DialogTitle>
             <DialogDescription>
               {editingEntry
                 ? 'Update the question and answer for this knowledge entry.'
@@ -101,31 +101,31 @@ export default function KnowledgeEntryFormDialog({
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="question">Question</Label>
+              <Label htmlFor="question" className="font-medium">Question</Label>
               <Input
                 id="question"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="What question should this answer?"
                 disabled={isPending}
-                className={errors.question ? 'border-destructive' : ''}
+                className={`border-2 focus:border-primary focus:shadow-glow transition-all ${errors.question ? 'border-destructive' : ''}`}
               />
               {errors.question && (
-                <p className="text-sm text-destructive">{errors.question}</p>
+                <p className="text-sm text-destructive font-medium">{errors.question}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="answer">Answer</Label>
+              <Label htmlFor="answer" className="font-medium">Answer</Label>
               <Textarea
                 id="answer"
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
                 placeholder="Provide a detailed answer..."
-                className={`min-h-[150px] ${errors.answer ? 'border-destructive' : ''}`}
+                className={`min-h-[150px] border-2 focus:border-primary focus:shadow-glow transition-all ${errors.answer ? 'border-destructive' : ''}`}
                 disabled={isPending}
               />
               {errors.answer && (
-                <p className="text-sm text-destructive">{errors.answer}</p>
+                <p className="text-sm text-destructive font-medium">{errors.answer}</p>
               )}
             </div>
           </div>
@@ -135,10 +135,11 @@ export default function KnowledgeEntryFormDialog({
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isPending}
+              className="border-2"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending} className="shadow-glow hover:shadow-glow-lg transition-all">
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {editingEntry ? 'Update' : 'Add'} Entry
             </Button>

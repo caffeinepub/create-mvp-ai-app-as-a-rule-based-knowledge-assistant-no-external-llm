@@ -1,132 +1,88 @@
 {
   "kind": "build_request",
-  "title": "Create MVP “AI” app as a rule-based knowledge assistant (no external LLM)",
+  "title": "Add pre-chat quick options (Study / Knowledge / Research / Other) to guide the first message",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Build an MVP “AI assistant” experience as a chat-style UI that answers users using a user-managed knowledge base (FAQ-style entries) and simple keyword matching (no external AI/LLM APIs).",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "ok caffine lets create an AI"
-        ]
-      },
-      "acceptanceCriteria": [
-        "App provides a chat interface where a user can type a question and receive an answer.",
-        "Answers are generated deterministically from stored knowledge entries using a simple keyword/term matching approach (no calls to OpenAI/Anthropic/other LLM services).",
-        "If no knowledge entry matches, the assistant responds with a clear fallback message asking the user to add knowledge entries."
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Implement backend persistence in Motoko for knowledge entries and chat history per authenticated user (Internet Identity), including CRUD operations for knowledge entries.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "ok caffine lets create an AI"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Authenticated users can create, list, update, and delete their own knowledge entries (title + body text).",
-        "Chat history is saved per user and can be retrieved after refresh.",
-        "Data persists across canister upgrades using stable storage (add migration logic only if required by template state)."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Create a Knowledge Base management screen in the React frontend to add/edit/delete knowledge entries and view all existing entries.",
+      "id": "REQ-9",
+      "text": "On the Chat page, when the chat history is empty (before the user starts chatting), display a set of selectable quick options/buttons labeled \"Study\", \"Knowledge\", \"Research\", and \"Other\" above the message input area (in the existing empty-state UI).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-4"
         ],
         "quotes": [
-          "ok caffine lets create an AI"
+          "GIVE OPTIONS BEFORE CHAT LIKE STUDY KNOWLEDGE RESEARCH AND OTHER"
         ]
       },
       "acceptanceCriteria": [
-        "User can add a new knowledge entry with required fields validated.",
-        "User can edit and delete an existing entry.",
-        "UI uses React Query for loading/mutations and shows loading + error states."
+        "When there are zero chat messages and the chat is not loading, the empty-state area shows four visible options: Study, Knowledge, Research, Other.",
+        "When there is at least one chat message, these options are not shown (normal chat message list remains unchanged).",
+        "All option labels are in English and match exactly: \"Study\", \"Knowledge\", \"Research\", \"Other\"."
       ]
     },
     {
-      "id": "REQ-4",
-      "text": "Add an authenticated app shell with navigation between Chat and Knowledge Base, and ensure unauthenticated users are prompted to sign in with Internet Identity.",
+      "id": "REQ-10",
+      "text": "Make each pre-chat option actionable: clicking an option should prefill the chat Textarea with a short English prompt appropriate to the selected option (without sending automatically), and place focus in the Textarea so the user can edit and send.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-4"
         ],
         "quotes": [
-          "ok caffine lets create an AI"
+          "GIVE OPTIONS BEFORE CHAT LIKE STUDY KNOWLEDGE RESEARCH AND OTHER"
         ]
       },
       "acceptanceCriteria": [
-        "When not signed in, the UI shows a sign-in call-to-action and prevents access to user data.",
-        "After sign-in, the user can navigate between Chat and Knowledge Base pages without losing session state.",
-        "Navigation state is clear and consistent across pages."
+        "Clicking \"Study\" prefills the input with a study-oriented prompt (English) and focuses the input.",
+        "Clicking \"Knowledge\" prefills the input with a knowledge-base-oriented prompt (English) and focuses the input.",
+        "Clicking \"Research\" prefills the input with a research-oriented prompt (English) and focuses the input.",
+        "Clicking \"Other\" prefills the input with a general/open-ended prompt (English) and focuses the input.",
+        "No chat message is sent until the user presses Enter (without Shift) or clicks the Send button.",
+        "The Send button enable/disable logic continues to work based on whether the input is non-empty and whether a message is pending."
       ]
     },
     {
-      "id": "REQ-5",
-      "text": "Apply a coherent visual theme across the app (color palette, typography, spacing, component styling) suitable for a productivity “assistant” tool; avoid default-looking styling and avoid blue/purple as primary brand colors.",
+      "id": "REQ-11",
+      "text": "Style the pre-chat options to match the existing app theme: use existing UI components (e.g., shadcn Button/Card) and ensure the options look good in both light and dark mode, preserving the current empty-state layout and spacing.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-4"
         ],
         "quotes": [
-          "ok caffine lets create an AI"
+          "GIVE OPTIONS BEFORE CHAT LIKE STUDY KNOWLEDGE RESEARCH AND OTHER"
         ]
       },
       "acceptanceCriteria": [
-        "All primary screens (Chat, Knowledge Base, auth prompt) share a consistent theme.",
-        "Theme uses Tailwind and shadcn/ui composition (do not edit immutable UI component sources).",
-        "Primary brand colors are not blue/purple."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Generate and include a simple app logo/mark as a static asset and display it in the app header/login view.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "ok caffine lets create an AI"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A generated image exists in frontend/public/assets/generated and is referenced directly by the frontend (not served via backend).",
-        "Logo appears in the app header (and/or sign-in view) with appropriate sizing and contrast.",
-        "Build has no missing-asset errors."
+        "Quick options use existing design system components/styles already present in the app (no new UI library).",
+        "Quick options are readable and visually distinct in both light and dark themes.",
+        "The Chat page still renders correctly at mobile and desktop sizes, with no horizontal overflow introduced by the options."
       ]
     }
   ],
   "constraints": [
-    "Do not use external AI/LLM APIs or integrations (no OpenAI/Anthropic/etc.).",
-    "Backend must remain a single Motoko actor (all logic in backend/main.mo).",
-    "Do not modify frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
-    "Use English for all user-facing text."
+    "Frontend files under the immutable paths must not be edited (e.g., frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx, and frontend/src/components/ui/*).",
+    "Keep the backend as a single-actor Motoko canister; do not introduce additional backend services.",
+    "Use English for any user-facing text added by this change."
   ],
   "nonGoals": [
-    "Implementing a true generative AI model or LLM-based chatbot.",
-    "Real-time features (WebSockets), push notifications, or email/SMS integrations.",
-    "Third-party authentication providers other than Internet Identity."
+    "Do not implement new backend persistence or schema changes for chat \"modes\".",
+    "Do not change the knowledge-base search/answering logic in the chat backend flow.",
+    "Do not add real-time features (WebSockets) or external AI/LLM API integrations."
   ],
   "imageRequirements": {
-    "required": [
-      "Minimal geometric “assistant” logo mark with subtle circuit/brain motif, warm neutral palette (ai-mark.dim_512x512.png)"
-    ],
+    "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

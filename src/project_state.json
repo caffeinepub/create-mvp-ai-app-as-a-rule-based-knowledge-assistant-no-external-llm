@@ -1,11 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 7,
   "summary": "Project to create an AI (details not yet specified).",
-  "architectural_notes": [],
+  "architectural_notes": [
+    "Visual direction change: user requests a more colorful UI theme across the app."
+  ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Minimal geometric “assistant” logo mark with subtle circuit/brain motif, warm neutral palette (ai-mark.dim_512x512.png)",
   "existing_features": [
     {
       "id": "feature-build-an-mvp-ai-assistant-experience-as-a-chat-style-ui-that-answers-users-using-a-user-managed-knowledge-base-faq-style-entries-and-simple-keyword-matching-no-external-ai-llm-apis",
@@ -46,6 +47,46 @@
         "REQ-6"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-rename-the-application-to-unknown-cric-across-all-user-facing-ui-text-and-page-metadata-replacing-existing-ai-assistant-generic-titles-where-they-represent-the-product-name-e-g-header-brand-title-unauthenticated-landing-welcome-title-browser-tab-title",
+      "title": "Rename the application to “UNKNOWN CRIC” across all user-facing UI text and page metadata, replacing existing “AI Assistant”/generic titles where they represent the product name (e.g., header brand title, unauthenticated landing welcome title, browser tab title).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-app-s-visual-theme-to-be-more-colorful-while-maintaining-a-coherent-design-system-light-and-dark-modes-increasing-the-use-of-accent-secondary-colors-contrast-and-visual-interest-e-g-gradients-tinted-surfaces-and-more-distinct-component-states-without-switching-to-blue-purple-as-the-primary-brand-colors",
+      "title": "Update the app’s visual theme to be more colorful while maintaining a coherent design system (light and dark modes), increasing the use of accent/secondary colors, contrast, and visual interest (e.g., gradients, tinted surfaces, and more distinct component states) without switching to blue/purple as the primary brand colors.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-chat-page-when-the-chat-history-is-empty-before-the-user-starts-chatting-display-a-set-of-selectable-quick-options-buttons-labeled-study-knowledge-research-and-other-above-the-message-input-area-in-the-existing-empty-state-ui",
+      "title": "On the Chat page, when the chat history is empty (before the user starts chatting), display a set of selectable quick options/buttons labeled \"Study\", \"Knowledge\", \"Research\", and \"Other\" above the message input area (in the existing empty-state UI).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-each-pre-chat-option-actionable-clicking-an-option-should-prefill-the-chat-textarea-with-a-short-english-prompt-appropriate-to-the-selected-option-without-sending-automatically-and-place-focus-in-the-textarea-so-the-user-can-edit-and-send",
+      "title": "Make each pre-chat option actionable: clicking an option should prefill the chat Textarea with a short English prompt appropriate to the selected option (without sending automatically), and place focus in the Textarea so the user can edit and send.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-the-pre-chat-options-to-match-the-existing-app-theme-use-existing-ui-components-e-g-shadcn-button-card-and-ensure-the-options-look-good-in-both-light-and-dark-mode-preserving-the-current-empty-state-layout-and-spacing",
+      "title": "Style the pre-chat options to match the existing app theme: use existing UI components (e.g., shadcn Button/Card) and ensure the options look good in both light and dark mode, preserving the current empty-state layout and spacing.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -62,9 +103,21 @@
         "REQ-2"
       ],
       "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Update the app's visual theme to be more colorful (increase color usage/contrast across UI while maintaining coherence).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add pre-chat selectable options/quick actions (e.g., Study, Knowledge, Research, etc.) shown before the user starts chatting to guide intent/mode.",
+      "reqIds": [],
+      "status": "pending"
     }
   ],
-  "projectName": "Create MVP “AI” app as a rule-based knowledge assistant (no external LLM)",
+  "projectName": "UNKNOWN CRIC",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }
